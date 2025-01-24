@@ -1,3 +1,9 @@
+<?php
+include 'config/db.php';
+
+
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -7,7 +13,7 @@
     <title>Movie Reviews</title>
 </head>
 <body>
-    <header>heja</header>
+    <header>siema</header>
     <main></main>
     <footer></footer>
 </body>
