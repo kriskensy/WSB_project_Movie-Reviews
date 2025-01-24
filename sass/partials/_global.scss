@@ -1,19 +1,18 @@
 //tutaj to co nie nie dotyczy bezpośrednio layoutu czy tekstu, np. buttony. Również ewentualne dodatkowe style dla headera i footera
 
-html, body {
-    height: 100%;
-  }
+// html, body {
+//     height: 100%;
+//   }
   
-  body {
-    background-color: #f4f4f4;
-  }
+//   body {
+//     background-color: #f4f4f4;
+//   }
   
-  a {
-    text-decoration: none;
-    color: $primary-color;
+//   a {
+//     text-decoration: none;
+//     color: $primary-color;
   
-    &:hover {
-      color: darken($primary-color, 10%);
-    }
-  }
-  
+//     &:hover {
+//       color: darken($primary-color, 10%);
+//     }
+//   }
