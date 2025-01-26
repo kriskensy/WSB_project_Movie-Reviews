@@ -1,6 +1,8 @@
-<hr>
-<footer>
-    <p>&copy; <?= date('Y'); ?> 24.01</p>
-</footer>
+</main>
+    <footer>
+        <div class="container">
+            <p>&copy; <?php echo date('Y'); ?> Movie Reviews. All Rights Reserved.</p>
+        </div>
+    </footer>
 </body>
 </html>

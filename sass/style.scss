@@ -1,5 +1,155 @@
-@use 'partials/normalize';
-@use 'partials/variables';
-@use 'partials/layout';
-@use 'partials/typography';
-@use 'partials/global';
+// Kolory
+$color-primary: #ffcc00;      //główny akcenty
+$color-secondary: #333;      //tło nagłówka
+$color-dark: #222;           //footer
+$color-light: #fff;          //jasny tekst
+$color-muted: #ccc;          //tekst na ciemnym tle
+$color-hover: #ffd633;       //hover
+$color-background: #f4f4f4;  //tło aplikacji
+$color-tertiary: #007bff;    //akcent linki
+$color-error: #dc3545;       //błędy
+$color-success: #28a745;     //sukcesy
+$color-info: #17a2b8;        //informacje
+$color-warning: #ffc107;     //ostrzeżenia
+$color-border: #ddd;         //bordery formularzy
+
+// Typografia
+$font-family-base: 'Arial', sans-serif;
+$font-size-base: 16px;       //bazowy
+$font-weight-normal: 400;
+$font-weight-bold: 700;
+
+// Przerwy i marginesy
+$spacing-small: 0.5rem;
+$spacing-medium: 1rem;
+$spacing-large: 2rem;
+
+$container-width: 1200px;    //max szerokość kontenera
+
+body {
+    background-color: $color-background;
+    font-family: $font-family-base;
+    color: $color-secondary;
+    margin: 0;
+    padding: 0;
+}
+
+header {
+    background-color: $color-primary;
+    color: $color-light;
+    padding: $spacing-medium 0;
+
+    .logo {
+        font-size: 1.5rem;
+        font-weight: $font-weight-bold;
+        color: $color-light;
+        text-decoration: none;
+    }
+
+    nav {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+
+        .menu {
+            list-style: none;
+            display: flex;
+            gap: $spacing-medium;
+
+            li a {
+                color: $color-light;
+                text-decoration: none;
+                font-weight: $font-weight-normal;
+
+                &:hover {
+                    color: $color-hover;
+                }
+            }
+        }
+    }
+}
+
+footer {
+    background-color: $color-dark;
+    color: $color-muted;
+    text-align: center;
+    padding: $spacing-medium 0;
+
+    p {
+        margin: 0;
+        font-size: 0.875rem;
+    }
+}
+
+.container {
+    max-width: $container-width;
+    margin: 0 auto;
+    padding: 0 $spacing-medium;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+    gap: $spacing-medium;
+    max-width: 400px;
+    margin: $spacing-large auto;
+    padding: $spacing-medium;
+    border: 1px solid $color-border;
+    border-radius: 8px;
+
+    label {
+        font-weight: $font-weight-bold;
+        margin-bottom: $spacing-small;
+    }
+
+    input {
+        padding: $spacing-small;
+        border: 1px solid $color-border;
+        border-radius: 4px;
+        font-size: $font-size-base;
+
+        &:focus {
+            outline: none;
+            border-color: $color-primary;
+        }
+    }
+
+    button {
+        background-color: $color-primary;
+        color: $color-light;
+        padding: $spacing-small;
+        border: none;
+        border-radius: 4px;
+        font-weight: $font-weight-bold;
+        cursor: pointer;
+
+        &:hover {
+            background-color: $color-hover;
+        }
+    }
+
+    .error {
+        color: $color-error;
+        font-size: 0.875rem;
+        margin-top: $spacing-small;
+    }
+
+    .success {
+        color: $color-success;
+        font-size: 0.875rem;
+        margin-top: $spacing-small;
+    }
+
+    .info {
+        color: $color-info;
+        font-size: 0.875rem;
+        margin-top: $spacing-small;
+    }
+
+    .warning {
+        color: $color-warning;
+        font-size: 0.875rem;
+        margin-top: $spacing-small;
+    }
+}
+
