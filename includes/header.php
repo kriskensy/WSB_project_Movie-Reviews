@@ -6,24 +6,27 @@ session_start();
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="css/style.css">
     <title>Movie Reviews</title>
 </head>
 <body>
 <header>
-    <nav>
-        <ul>
+    <nav class="navbar">
+        <div class="center-button">
+            <a href="index.php" class="btn btn-home">Strona główna</a>
+        </div>
+        <div class="right-buttons">
             <?php if (isset($_SESSION['user_id'])): ?>
-                <li>Witaj, <?= htmlspecialchars($_SESSION['username']) ?>!</li>
+                <span class="welcome">Witaj, <?= htmlspecialchars($_SESSION['username']) ?>!</span>
                 <?php if (isset($_SESSION['role']) && $_SESSION['role'] === 'Admin'): ?>
-                    <li><a href="admin/dashboard.php">Panel Administratora</a></li>
+                    <a href="admin/dashboard.php" class="btn">Panel Administratora</a>
                 <?php endif; ?>
-                <li><a href="user/profile.php">Mój profil</a></li>
-                <li><a href="../logout.php">Wyloguj</a></li>
+                <a href="user/profile.php" class="btn">Mój profil</a>
+                <a href="../logout.php" class="btn">Wyloguj</a>
             <?php else: ?>
-                <li><a href="login.php">Zaloguj</a></li>
-                <li><a href="register.php">Zarejestruj się</a></li>
+                <a href="login.php" class="btn">Zaloguj</a>
+                <a href="register.php" class="btn">Zarejestruj się</a>
             <?php endif; ?>
-        </ul>
+        </div>
     </nav>
 </header>

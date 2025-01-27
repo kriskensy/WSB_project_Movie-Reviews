@@ -44,7 +44,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <title>Logowanie</title>
 </head>
 <body>
-<h1>Logowanie</h1>
+    <div class="main-content">
+    <h1>Logowanie</h1>
 <?php if (isset($error)): ?>
     <p style="color: red;"><?= htmlspecialchars($error) ?></p>
 <?php endif; ?>
@@ -55,6 +56,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <input type="password" name="password" id="password" required>
     <button type="submit">Zaloguj</button>
 </form>
+    </div>
+
 </body>
 </html>
 <?php
