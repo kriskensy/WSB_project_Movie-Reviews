@@ -6,7 +6,7 @@ session_start();
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="../css/style.css">
     <title>Movie Reviews</title>
 </head>
 <body>
@@ -16,10 +16,10 @@ session_start();
             <?php if (isset($_SESSION['user_id'])): ?>
                 <li>Witaj, <?= htmlspecialchars($_SESSION['username']) ?>!</li>
                 <?php if (isset($_SESSION['role']) && $_SESSION['role'] === 'Admin'): ?>
-                    <li><a href="admin_panel.php">Panel Administratora</a></li>
+                    <li><a href="admin/dashboard.php">Panel Administratora</a></li>
                 <?php endif; ?>
-                <li><a href="profile.php">Mój profil</a></li>
-                <li><a href="logout.php">Wyloguj</a></li>
+                <li><a href="user/profile.php">Mój profil</a></li>
+                <li><a href="../logout.php">Wyloguj</a></li>
             <?php else: ?>
                 <li><a href="login.php">Zaloguj</a></li>
                 <li><a href="register.php">Zarejestruj się</a></li>

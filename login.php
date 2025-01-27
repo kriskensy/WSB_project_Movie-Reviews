@@ -20,9 +20,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $_SESSION['user_id'] = $user['IdUser'];
             $_SESSION['username'] = $user['Username'];
             $_SESSION['role'] = $user['Rolename'];
+            $_SESSION['email'] = $user['Email']; 
 
             if ($user['Rolename'] === 'Admin') {
-                header('Location: admin_panel.php');
+                header('Location: dashboard.php');
             } else {
                 header('Location: index.php');
             }

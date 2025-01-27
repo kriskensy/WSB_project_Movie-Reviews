@@ -153,3 +153,93 @@ form {
     }
 }
 
+//user profile
+.profile-container {
+    max-width: $container-width;
+    margin: $spacing-large auto;
+    padding: $spacing-medium;
+    background-color: $color-light;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.profile-container h1 {
+    font-size: 2rem;
+    font-weight: $font-weight-bold;
+    color: $color-secondary;
+    text-align: center;
+}
+
+.profile-container p {
+    font-size: 1.125rem;
+    color: $color-secondary;
+    text-align: center;
+    margin-top: $spacing-small;
+}
+
+.reviews-list {
+    list-style-type: none;
+    padding: 0;
+}
+
+.reviews-list li {
+    background-color: $color-light;
+    padding: $spacing-medium;
+    margin-bottom: $spacing-medium;
+    border-radius: 8px;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+}
+
+.reviews-list li strong {
+    color: $color-primary;
+}
+
+.reviews-list li .rating {
+    color: $color-primary;
+    font-weight: $font-weight-bold;
+}
+
+.reviews-list li a {
+    text-decoration: none;
+    color: $color-tertiary;
+    margin-right: $spacing-small;
+    font-weight: $font-weight-bold;
+    transition: color 0.3s ease;
+
+    &:hover {
+        color: $color-hover;
+    }
+}
+
+.reviews-list li a.delete {
+    color: $color-error;
+
+    &:hover {
+        color: darken($color-error, 10%);
+    }
+}
+
+.no-reviews {
+    font-style: italic;
+    color: $color-muted;
+    text-align: center;
+    font-size: 1.125rem;
+    margin-top: $spacing-large;
+}
+
+.add-review-link {
+    display: inline-block;
+    margin-top: $spacing-medium;
+    padding: $spacing-small $spacing-medium;
+    background-color: $color-primary;
+    color: $color-light;
+    text-decoration: none;
+    border-radius: 4px;
+    text-align: center;
+    font-weight: $font-weight-bold;
+    transition: background-color 0.3s ease;
+
+    &:hover {
+        background-color: $color-hover;
+    }
+}
