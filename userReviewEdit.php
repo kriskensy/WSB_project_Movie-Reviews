@@ -1,10 +1,10 @@
 <?php
-include '../includes/header.php';
-include '../config/db.php';
-include '../helpers/auth.php';
+include 'config/db.php';
+include 'helpers/auth.php';
+include 'includes/header.php';
 
 if (!isAuthenticated()) {
-    header('Location: login.php');
+    header('Location: generalLogin.php');
     exit;
 }
 
@@ -36,7 +36,7 @@ if ($reviewId) {
         $stmt->bindParam(':id', $reviewId);
         $stmt->execute();
 
-        header("Location: profile.php");
+        header("Location: userProfile.php");
         exit;
     }
 } else {
@@ -64,4 +64,4 @@ if ($reviewId) {
 </form>
 </body>
 </html>
-<?php include '../includes/footer.php'; ?>
+<?php include 'includes/footer.php'; ?>

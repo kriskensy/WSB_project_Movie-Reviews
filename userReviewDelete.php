@@ -1,10 +1,10 @@
 <?php
-include '../includes/header.php';
-include '../config/db.php';
-include '../helpers/auth.php';
+include 'config/db.php';
+include 'helpers/auth.php';
+include 'includes/header.php';
 
 if (!isAuthenticated()) {
-    header('Location: login.php');
+    header('Location: generalLogin.php');
     exit;
 }
 
@@ -18,7 +18,7 @@ if ($reviewId) {
     $stmt->bindParam(':userId', $_SESSION['user_id']);
     $stmt->execute();
 
-    header("Location: profile.php");
+    header("Location: userProfile.php");
     exit;
 } else {
     echo "Nieprawidłowe żądanie.";
@@ -27,4 +27,4 @@ if ($reviewId) {
 ?>
 <h1>Recenzja została usunięta.</h1>
 
-<?php include '../includes/footer.php'; ?>
+<?php include 'includes/footer.php'; ?>

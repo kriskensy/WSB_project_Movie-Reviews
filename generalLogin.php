@@ -1,6 +1,7 @@
 <?php
-include 'includes/header.php';
 include 'config/db.php';
+include 'helpers/auth.php';
+include 'includes/header.php';
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $username = $_POST['username'];
@@ -23,9 +24,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $_SESSION['email'] = $user['Email']; 
 
             if ($user['Rolename'] === 'Admin') {
-                header('Location: dashboard.php');
+                header('Location: adminDashboard.php');
             } else {
-                header('Location: index.php');
+                header('Location: userProfile.php');
             }
             exit;
         } else {
@@ -49,7 +50,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <?php if (isset($error)): ?>
     <p style="color: red;"><?= htmlspecialchars($error) ?></p>
 <?php endif; ?>
-<form method="POST" action="login.php">
+<form method="POST" action="generalLogin.php">
     <label for="username">Nazwa użytkownika:</label>
     <input type="text" name="username" id="username" required>
     <label for="password">Hasło:</label>
@@ -60,6 +61,4 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 </body>
 </html>
-<?php
-include('includes/footer.php');
-?>
+<?php include 'includes/footer.php'; ?>

@@ -1,11 +1,11 @@
 <?php
-include '../config/db.php';
-include '../helpers/auth.php';
-include '../includes/header.php';
+include 'config/db.php';
+include 'helpers/auth.php';
+include 'includes/header.php';
 
 //czy admin
 if (!isAuthenticated() || $_SESSION['role'] !== 'Admin') {
-    header('Location: ../login.php');
+    header('Location: generallogin.php');
     exit;
 }
 
@@ -46,7 +46,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         if ($stmtUpdate->execute()) {
             $successMessage = "Recenzja została zaktualizowana pomyślnie!";
-            header("Location: manageReviews.php");
+            header("Location: adminReviewsManage.php");
             exit;
         } else {
             $errors[] = "Wystąpił problem z aktualizacją recenzji.";
@@ -74,15 +74,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         </div>
     <?php endif; ?>
 
-    <form method="POST" action="editReview.php?id=<?php echo htmlspecialchars($reviewId); ?>">
+    <form method="POST" action="adminReviewEdit.php?id=<?php echo htmlspecialchars($reviewId); ?>">
         <label for="rating">Ocena:</label>
         <input type="number" name="rating" id="rating" value="<?php echo htmlspecialchars($review['Rating']); ?>" min="1" max="10" required>
 
         <label for="review">Recenzja:</label>
-        <textarea name="review" id="review" required><?php echo htmlspecialchars($review['Review']); ?></textarea>
+        <textarea name="review" id="review" required><?php echo htmlspecialchars($review['Content']); ?></textarea>
 
         <button type="submit">Zapisz zmiany</button>
     </form>
 </div>
 
-<?php include '../includes/footer.php'; ?>
+<?php include 'includes/footer.php'; ?>

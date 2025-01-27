@@ -1,18 +1,18 @@
 <?php
-include '../config/db.php';
-include '../helpers/auth.php';
-include '../includes/header.php';
+include 'config/db.php';
+include 'helpers/auth.php';
+include 'includes/header.php';
 
 //czy admin
-if (!isAuthenticated() || $_SESSION['role'] !== 'Admin') {
-    header('Location: ../login.php');
+if (!isAuthenticated() || $_SESSION['role'] === 'Admin') {
+    header('Location: generalLogin.php');
     exit;
 }
 
-//pobranie filmów
+//lista filmów
 $conn = connectToDatabase();
 $stmt = $conn->prepare("SELECT m.IdMovie, m.Title, m.ReleaseYear, m.Description, 
-                               d.Name AS Director, g.Name AS Genre 
+                               d.Name AS Director, g.Name AS Genre , m.AverageRating
                         FROM Movies m
                         JOIN Directors d ON m.IdDirector = d.IdDirector
                         JOIN Genres g ON m.IdGenre = g.IdGenre
@@ -22,8 +22,7 @@ $movies = $stmt->fetchAll(PDO::FETCH_ASSOC);
 ?>
 
 <div class="container">
-    <h1>Zarządzaj filmami</h1>
-    <a href="addMovie.php" class="btn btn-success">Dodaj nowy film</a>
+    <h1>Lista filmów</h1>
 
     <?php if (empty($movies)): ?>
         <p>Brak filmów w bazie danych.</p>
@@ -37,7 +36,8 @@ $movies = $stmt->fetchAll(PDO::FETCH_ASSOC);
                     <th>Reżyser</th>
                     <th>Gatunek</th>
                     <th>Opis</th>
-                    <th>Akcje</th>
+                    <th>Średnia Ocena</th>
+                    <th>Akcja</th>
                 </tr>
             </thead>
             <tbody>
@@ -50,8 +50,14 @@ $movies = $stmt->fetchAll(PDO::FETCH_ASSOC);
                         <td><?php echo htmlspecialchars($movie['Genre']); ?></td>
                         <td><?php echo nl2br(htmlspecialchars($movie['Description'])); ?></td>
                         <td>
-                            <a href="editMovie.php?id=<?php echo $movie['IdMovie']; ?>" class="btn btn-warning">Edytuj</a>
-                            <a href="deleteMovie.php?id=<?php echo $movie['IdMovie']; ?>" class="btn btn-danger" onclick="return confirm('Czy na pewno chcesz usunąć ten film?')">Usuń</a>
+                            <?php if ($movie['AverageRating'] !== null): ?>
+                                <?php echo number_format($movie['AverageRating'], 2); ?>
+                            <?php else: ?>
+                                Brak ocen
+                            <?php endif; ?>
+                        </td>
+                        <td>
+                            <a href="generalMovie.php?id=<?php echo $movie['IdMovie']; ?>" class="btn btn-details">Pokaż szczegóły</a>
                         </td>
                     </tr>
                 <?php endforeach; ?>
@@ -60,5 +66,4 @@ $movies = $stmt->fetchAll(PDO::FETCH_ASSOC);
     <?php endif; ?>
 </div>
 
-
-<?php include '../includes/footer.php'; ?>
+<?php include 'includes/footer.php'; ?>

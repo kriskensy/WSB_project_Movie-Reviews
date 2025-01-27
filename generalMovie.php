@@ -1,8 +1,9 @@
 <?php
-include 'includes/header.php';
 include 'config/db.php';
+include 'helpers/auth.php';
+include 'includes/header.php';
 
-// Pobranie ID filmu
+//pobranie ID filmu
 $movieId = $_GET['id'] ?? null;
 
 if (!$movieId) {
@@ -12,7 +13,7 @@ if (!$movieId) {
 
 $conn = connectToDatabase();
 
-// Pobranie danych filmu wraz z gatunkiem
+//pobranie filmu z gatunkiem
 $stmt = $conn->prepare("
     SELECT m.Title, m.Description, m.ReleaseYear, g.Name AS Genre
     FROM Movies m
@@ -27,6 +28,12 @@ if (!$movie) {
     echo "Film nie istnieje.";
     exit;
 }
+
+//średnia ocena filmu
+$ratingStmt = $conn->prepare("SELECT AVG(Rating) AS AvgRating FROM Reviews WHERE IdMovie = :id");
+$ratingStmt->bindParam(':id', $movieId);
+$ratingStmt->execute();
+$avgRating = $ratingStmt->fetch(PDO::FETCH_ASSOC)['AvgRating'] ?? 0;
 ?>
 
 <div class="movie-details-container" style="background: url('images/movie-reviews-background.jpg') no-repeat center center/cover;">
@@ -35,7 +42,8 @@ if (!$movie) {
         <p><strong>Opis:</strong> <?php echo htmlspecialchars($movie['Description']); ?></p>
         <p><strong>Gatunek:</strong> <?php echo htmlspecialchars($movie['Genre'] ?? 'Nieznany'); ?></p>
         <p><strong>Rok produkcji:</strong> <?php echo htmlspecialchars($movie['ReleaseYear']); ?></p>
-        <a href="addReview.php?id=<?php echo $movieId; ?>" class="btn">Dodaj recenzję</a>
+        <p><strong>Średnia ocena:</strong> <?php echo number_format($avgRating, 1); ?>/5</p>
+        <a href="userReviewAdd.php?id=<?php echo $movieId; ?>" class="btn">Dodaj recenzję</a>
     </div>
 </div>
 

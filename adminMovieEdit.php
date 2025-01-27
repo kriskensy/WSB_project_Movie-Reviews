@@ -1,11 +1,11 @@
 <?php
-include '../config/db.php';
-include '../helpers/auth.php';
-include '../includes/header.php';
+include 'config/db.php';
+include 'helpers/auth.php';
+include 'includes/header.php';
 
 //czy admin
 if (!isAuthenticated() || $_SESSION['role'] !== 'Admin') {
-    header('Location: ../login.php');
+    header('Location: generalLogin.php');
     exit;
 }
 
@@ -98,7 +98,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $stmt->execute();
             $movie = $stmt->fetch(PDO::FETCH_ASSOC);
             
-            header("Location: manageMovies.php");
+            header("Location: adminMoviesManage.php");
             exit;
         } else {
             $errors[] = "Wystąpił problem z aktualizacją filmu. Spróbuj ponownie.";
@@ -126,7 +126,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         </div>
     <?php endif; ?>
 
-    <form method="POST" action="editMovie.php?id=<?php echo htmlspecialchars($movieId); ?>">
+    <form method="POST" action="adminMovieEdit.php?id=<?php echo htmlspecialchars($movieId); ?>">
         <label for="title">Tytuł filmu:</label>
         <input type="text" name="title" id="title" value="<?php echo htmlspecialchars($movie['Title']); ?>" required>
 
@@ -162,4 +162,4 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     </form>
 </div>
 
-<?php include '../includes/footer.php'; ?>
+<?php include 'includes/footer.php'; ?>

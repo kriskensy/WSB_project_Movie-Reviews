@@ -1,11 +1,11 @@
 <?php
-include '../config/db.php';
-include '../helpers/auth.php';
-include '../includes/header.php';
+include 'config/db.php';
+include 'helpers/auth.php';
+include 'includes/header.php';
 
 //czy admin
 if (!isAuthenticated() || $_SESSION['role'] !== 'Admin') {
-    header('Location: ../login.php');
+    header('Location: generalLogin.php');
     exit;
 }
 
@@ -29,7 +29,7 @@ if ($movieId) {
         $deleteStmt->execute();
         $message = "Film \"" . htmlspecialchars($movie['Title']) . "\" został pomyślnie usunięty.";
 
-        header("Location: manageMovies.php");
+        header("Location: adminMoviesManage.php");
         exit;
     } else {
         $message = "Nie znaleziono filmu o podanym ID.";
@@ -42,7 +42,7 @@ if ($movieId) {
 <div class="container">
     <h1>Usuwanie filmu</h1>
     <p><?= $message ?></p>
-    <a href="manageMovies.php" class="btn">Wróć do zarządzania filmami</a>
+    <a href="adminMoviesManage.php" class="btn">Wróć do zarządzania filmami</a>
 </div>
 
-<?php include '../includes/footer.php'; ?>
+<?php include 'includes/footer.php'; ?>

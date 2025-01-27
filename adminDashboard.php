@@ -1,11 +1,11 @@
 <?php
-include '../config/db.php';
-include '../helpers/auth.php';
-include '../includes/header.php';
+include 'config/db.php';
+include 'helpers/auth.php';
+include 'includes/header.php';
 
 //czy admin
 if (!isAuthenticated() || $_SESSION['role'] !== 'Admin') {
-    header('Location: ../login.php');
+    header('Location: generalLogin.php');
     exit;
 }
 
@@ -29,12 +29,12 @@ $reviewCount = $conn->query("SELECT COUNT(*) FROM Reviews")->fetchColumn();
         <div class="stat">
             <h2>Filmy</h2>
             <p><?php echo $movieCount; ?></p>
-            <a href="manageMovies.php" class="btn btn-primary">Zarządzaj filmami</a>
+            <a href="adminMoviesManage.php" class="btn btn-primary">Zarządzaj filmami</a>
         </div>
         <div class="stat">
             <h2>Recenzje</h2>
             <p><?php echo $reviewCount; ?></p>
-            <a href="manageReviews.php" class="btn btn-primary">Zarządzaj recenzjami</a>
+            <a href="adminReviewsManage.php" class="btn btn-primary">Zarządzaj recenzjami</a>
         </div>
         <div class="stat">
             <h2>Użytkownicy</h2>
@@ -43,4 +43,4 @@ $reviewCount = $conn->query("SELECT COUNT(*) FROM Reviews")->fetchColumn();
     </div>
 </div>
 
-<?php include '../includes/footer.php'; ?>
+<?php include 'includes/footer.php'; ?>

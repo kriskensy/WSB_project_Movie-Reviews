@@ -1,11 +1,11 @@
 <?php
-include '../config/db.php';
-include '../helpers/auth.php';
-include '../includes/header.php';
+include 'config/db.php';
+include 'helpers/auth.php';
+include 'includes/header.php';
 
 //czy admin
 if (!isAuthenticated() || $_SESSION['role'] !== 'Admin') {
-    header('Location: ../login.php');
+    header('Location: generalLogin.php');
     exit;
 }
 
@@ -24,7 +24,7 @@ if (isset($_GET['delete'])) {
     $stmtDelete = $conn->prepare("DELETE FROM Reviews WHERE IdReview = :id");
     $stmtDelete->bindParam(':id', $reviewId);
     if ($stmtDelete->execute()) {
-        header("Location: manageReviews.php");
+        header("Location: adminReviewsManage.php");
         exit;
     }
     $errorMessage = "Wystąpił problem z usunięciem recenzji.";
@@ -58,7 +58,7 @@ if (isset($_GET['delete'])) {
                     <td><?php echo htmlspecialchars($review['Rating']); ?></td>
                     <td><?php echo htmlspecialchars($review['ReviewContent']); ?></td>
                     <td>
-                        <a href="editReview.php?id=<?php echo htmlspecialchars($review['IdReview']); ?>" class="btn btn-warning">Edytuj</a>
+                        <a href="adminReviewEdit.php?id=<?php echo htmlspecialchars($review['IdReview']); ?>" class="btn btn-warning">Edytuj</a>
                         <a href="?delete=<?php echo htmlspecialchars($review['IdReview']); ?>" class="btn btn-danger" onclick="return confirm('Czy na pewno chcesz usunąć tę recenzję?')">Usuń</a>
                     </td>
                 </tr>
@@ -67,4 +67,4 @@ if (isset($_GET['delete'])) {
     </table>
 </div>
 
-<?php include '../includes/footer.php'; ?>
+<?php include 'includes/footer.php'; ?>

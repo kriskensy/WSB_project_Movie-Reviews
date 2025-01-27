@@ -1,10 +1,10 @@
 <?php
-include '../includes/header.php';
-include '../config/db.php';
-include '../helpers/auth.php';
+include 'config/db.php';
+include 'helpers/auth.php';
+include 'includes/header.php';
 
 if (!isAuthenticated()) {
-    header('Location: login.php');
+    header('Location: generalLogin.php');
     exit;
 }
 
@@ -35,7 +35,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $stmt->bindParam(':reviewId', $existingReview['IdReview']);
         $stmt->execute();
     } else {
-        $stmt = $conn->prepare("INSERT INTO Reviews (IdUser, IdMovie, Content, Rating) VALUES (:userId, :movieId, :content, :rating)");
+        $stmt = $conn->prepare("INSERT INTO Reviews (IdUser, IdMovie, Content, Rating, Date) VALUES (:userId, :movieId, :content, :rating, CURRENT_TIMESTAMP)"); //current ustawia automatycznie aktualną datę
         $stmt->bindParam(':userId', $_SESSION['user_id']);
         $stmt->bindParam(':movieId', $movieId);
         $stmt->bindParam(':content', $content);
@@ -49,13 +49,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $stmt->execute();
     $averageRating = $stmt->fetch(PDO::FETCH_ASSOC)['averageRating'];
 
-    //aktualizacja średniej ocen
+    //aktualizacja średniej ocen (bez aktualizacji daty)
     $stmt = $conn->prepare("UPDATE Movies SET AverageRating = :averageRating WHERE IdMovie = :movieId");
     $stmt->bindParam(':averageRating', $averageRating);
     $stmt->bindParam(':movieId', $movieId);
     $stmt->execute();
 
-    header("Location: reviews.php");
+    header("Location: userProfile.php");
     exit;
 }
 
@@ -79,8 +79,8 @@ if (!$movie) {
 <?php endif; ?>
 
 <form method="POST">
-    <label for="reviewText">Tekst recenzji:</label>
-    <textarea name="reviewText" id="reviewText" rows="5" required><?php echo $existingReview['ReviewText'] ?? ''; ?></textarea><br>
+    <label for="content">Tekst recenzji:</label>
+    <textarea name="content" id="content" rows="5" required><?php echo $existingReview['Content'] ?? ''; ?></textarea><br>
 
     <label for="rating">Ocena (1-5):</label>
     <input type="number" name="rating" id="rating" min="1" max="5" required value="<?php echo $existingReview['Rating'] ?? ''; ?>"><br>
@@ -88,4 +88,4 @@ if (!$movie) {
     <button type="submit"><?php echo $existingReview ? 'Edytuj recenzję' : 'Dodaj recenzję'; ?></button>
 </form>
 
-<?php include '../includes/footer.php'; ?>
+<?php include 'includes/footer.php'; ?>

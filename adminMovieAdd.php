@@ -1,11 +1,11 @@
 <?php
-include '../config/db.php';
-include '../helpers/auth.php';
-include '../includes/header.php';
+include 'config/db.php';
+include 'helpers/auth.php';
+include 'includes/header.php';
 
 //czy admin
 if (!isAuthenticated() || $_SESSION['role'] !== 'Admin') {
-    header('Location: ../login.php');
+    header('Location: generalLogin.php');
     exit;
 }
 
@@ -51,7 +51,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         if ($stmtMovie->execute()) {
             $successMessage = "Film został dodany pomyślnie!";
-            header("Location: manageMovies.php");
+            header("Location: adminMoviesManage.php");
             exit;
         } else {
             $errors[] = "Wystąpił problem z dodaniem filmu. Spróbuj ponownie.";
@@ -84,7 +84,7 @@ $genres = $conn->query("SELECT IdGenre, Name FROM Genres")->fetchAll(PDO::FETCH_
         </div>
     <?php endif; ?>
 
-    <form method="POST" action="addMovie.php">
+    <form method="POST" action="adminMovieAdd.php">
         <label for="title">Tytuł filmu:</label>
         <input type="text" name="title" id="title" required>
 
@@ -118,4 +118,4 @@ $genres = $conn->query("SELECT IdGenre, Name FROM Genres")->fetchAll(PDO::FETCH_
     </form>
 </div>
 
-<?php include '../includes/footer.php'; ?>
+<?php include 'includes/footer.php'; ?>
