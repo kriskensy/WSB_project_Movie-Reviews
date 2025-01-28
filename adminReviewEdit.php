@@ -17,7 +17,7 @@ if (!$reviewId || !is_numeric($reviewId)) {
 
 $conn = connectToDatabase();
 
-// Pobranie recenzji
+//pobranie recenzji
 $stmt = $conn->prepare("SELECT * FROM Reviews WHERE IdReview = :id");
 $stmt->bindParam(':id', $reviewId, PDO::PARAM_INT);
 $stmt->execute();

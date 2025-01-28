@@ -49,8 +49,8 @@ body {
     justify-content: space-between;
     align-items: center;
     padding: 15px 30px;
-    background-color: #333;
-    color: #fff;
+    background-color: $color-secondary;
+    color: $color-light;
 }
 
 //homepage button
@@ -64,14 +64,14 @@ body {
     font-size: 1.2rem;
     font-weight: bold;
     text-decoration: none;
-    color: #fff;
+    color: $color-light;
     background-color: $color-primary;
     border-radius: 8px;
     transition: background-color 0.3s ease, transform 0.2s ease;
 }
 
 .center-button .btn-home:hover {
-    background-color: #0056b3;
+    background-color: $color-tertiary;
     transform: translateY(-3px);
 }
 
@@ -88,14 +88,14 @@ body {
     font-size: 1rem;
     font-weight: bold;
     text-decoration: none;
-    color: #fff;
+    color: $color-light;
     background-color: $color-primary;
     border-radius: 5px;
     transition: background-color 0.3s ease, transform 0.2s ease;
 }
 
 .right-buttons .btn:hover {
-    background-color: #222;
+    background-color: $color-tertiary;
     transform: translateY(-3px);
 }
 
@@ -103,7 +103,7 @@ body {
 .welcome {
     margin-right: 15px;
     font-size: 1rem;
-    color: #ddd;
+    color: $color-border;
     font-style: italic;
 }
 
@@ -625,7 +625,7 @@ form {
     align-items: center;
     min-height: calc(100vh - 120px);
     padding: 40px;
-    background-color: #f4f4f9;
+    background-color: $color-background;
 }
 
 .movie-card {
@@ -661,7 +661,7 @@ form {
     padding: 15px 30px;
     font-size: 1.2rem;
     background-color: $color-success;
-    color: #ffffff;
+    color: $color-light;
     border-radius: 8px;
     text-decoration: none;
     font-weight: bold;
@@ -669,6 +669,6 @@ form {
 }
 
 .movie-card .btn:hover {
-    background-color: #0056b3;
+    background-color: $color-tertiary;
     transform: translateY(-4px);
 }

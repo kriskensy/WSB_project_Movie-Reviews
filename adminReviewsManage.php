@@ -11,14 +11,14 @@ if (!isAuthenticated() || $_SESSION['role'] !== 'Admin') {
 
 $conn = connectToDatabase();
 
-// Pobranie recenzji
+//pobranie recenzji
 $stmt = $conn->query("SELECT r.IdReview, r.Content AS ReviewContent, r.Rating, m.Title AS MovieTitle, u.Username 
                       FROM Reviews r 
                       JOIN Movies m ON r.IdMovie = m.IdMovie
                       JOIN Users u ON r.IdUser = u.IdUser");
 $reviews = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-// Usuwanie recenzji
+//usuwanie recenzji
 if (isset($_GET['delete'])) {
     $reviewId = $_GET['delete'];
     $stmtDelete = $conn->prepare("DELETE FROM Reviews WHERE IdReview = :id");

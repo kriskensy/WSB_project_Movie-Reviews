@@ -11,7 +11,7 @@ if (!isAuthenticated()) {
 $reviewId = $_GET['id'] ?? null;
 
 if ($reviewId) {
-    // Pobierz recenzję z bazy
+    //pobieranie recenzji
     $conn = connectToDatabase();
     $stmt = $conn->prepare("SELECT * FROM Reviews WHERE IdReview = :id AND IdUser = :userId");
     $stmt->bindParam(':id', $reviewId);
@@ -26,7 +26,7 @@ if ($reviewId) {
     }
 
     if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-        // Zaktualizuj recenzję
+        //aktualizacja recenzji
         $newContent = $_POST['content'];
         $newRating = $_POST['rating'];
 

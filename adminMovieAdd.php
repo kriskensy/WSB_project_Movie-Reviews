@@ -9,7 +9,7 @@ if (!isAuthenticated() || $_SESSION['role'] !== 'Admin') {
     exit;
 }
 
-//formularz dodawania
+//formularz dodawania filmów
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $title = trim($_POST['title']);
     $directorId = $_POST['director'];
@@ -19,7 +19,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     $errors = [];
 
-    //walidacja
+    // Walidacja
     if (empty($title)) {
         $errors[] = "Tytuł filmu jest wymagany.";
     }
@@ -36,7 +36,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $errors[] = "Opis filmu jest wymagany.";
     }
 
-    //tablica z erroami bez błędów dodaje do bazy
+    //jeśli brak błędów to film dodany
     if (empty($errors)) {
         $conn = connectToDatabase();
 
@@ -68,15 +68,16 @@ $genres = $conn->query("SELECT IdGenre, Name FROM Genres")->fetchAll(PDO::FETCH_
 <div class="container">
     <h1>Dodaj nowy film</h1>
 
-    <?php if (!empty($errors)): ?>
-        <div class="error">
+    <!-- komunikaty walidacji -->
+    <div class="error" id="error-messages">
+        <?php if (!empty($errors)): ?>
             <ul>
                 <?php foreach ($errors as $error): ?>
                     <li><?php echo htmlspecialchars($error); ?></li>
                 <?php endforeach; ?>
             </ul>
-        </div>
-    <?php endif; ?>
+        <?php endif; ?>
+    </div>
 
     <?php if (!empty($successMessage)): ?>
         <div class="success">
@@ -84,7 +85,8 @@ $genres = $conn->query("SELECT IdGenre, Name FROM Genres")->fetchAll(PDO::FETCH_
         </div>
     <?php endif; ?>
 
-    <form method="POST" action="adminMovieAdd.php">
+    <!-- dodawanie filmu -->
+    <form method="POST" action="adminMovieAdd.php" id="movieForm">
         <label for="title">Tytuł filmu:</label>
         <input type="text" name="title" id="title" required>
 
@@ -119,3 +121,6 @@ $genres = $conn->query("SELECT IdGenre, Name FROM Genres")->fetchAll(PDO::FETCH_
 </div>
 
 <?php include 'includes/footer.php'; ?>
+
+<!-- podpięcie skryptu JS do walidacji po stronie klienta -->
+<script src="js/script.js"></script>
