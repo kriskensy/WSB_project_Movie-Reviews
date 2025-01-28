@@ -2,6 +2,7 @@
 include 'config/db.php';
 include 'helpers/auth.php';
 include 'includes/header.php';
+include 'helpers/validation.php';
 
 //czy admin
 if (!isAuthenticated() || $_SESSION['role'] !== 'Admin') {
@@ -59,25 +60,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $releaseYear = trim($_POST['releaseYear']);
     $description = trim($_POST['description']);
 
-    $errors = [];
-
-    //walidacja
-    if (empty($title)) {
-        $errors[] = "Tytuł filmu jest wymagany.";
-    }
-    if (empty($director)) {
-        $errors[] = "Reżyser jest wymagany.";
-    }
-    if (empty($genre)) {
-        $errors[] = "Gatunek jest wymagany.";
-    }
-    if (empty($releaseYear) || !preg_match('/^\d{4}-\d{2}-\d{2}$/', $releaseYear)) {
-        $errors[] = "Rok produkcji musi być poprawną datą.";
-    }
-    if (empty($description)) {
-        $errors[] = "Opis filmu jest wymagany.";
-    }
-
+    //wywołanie funkcji walidującej dane wprowadzane do formularza
+    $errors = validateMovieForm($_POST);
+    
     //tablica z erroami beż błędów dodaje do bazy
     if (empty($errors)) {
         $stmt = $conn->prepare("UPDATE Movies 
