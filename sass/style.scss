@@ -55,7 +55,7 @@ body, html {
     text-align: center;
 }
 
-//header navbar
+// header navbar
 .navbar {
     display: flex;
     justify-content: space-between;
@@ -85,13 +85,8 @@ body, html {
     transform: scale(0.98);
 }
 
-//homepage button
-.center-button {
-    flex: 1;
-    margin-left: 5rem;
-}
-
-.center-button .btn-home {
+// przyciski nawigacji
+.btn-style {
     padding: 10px 20px;
     font-size: 1rem;
     font-weight: bold;
@@ -102,33 +97,27 @@ body, html {
     transition: background-color 0.3s ease, transform 0.2s ease;
 }
 
-.center-button .btn-home:hover {
+.btn-style:hover {
     background-color: $color-tertiary;
     transform: translateY(-3px);
 }
 
-/* Przyciski po prawej */
+.left-buttons {
+    flex: 1;
+    margin-left: 5rem;
+
+    .btn {
+    @extend .btn-style;
+    }
+}
+
 .right-buttons {
     flex: 1;
     text-align: right;
-}
 
-.right-buttons .btn {
-    display: inline-block;
-    padding: 10px 20px;
-    margin-left: 10px;
-    font-size: 1rem;
-    font-weight: bold;
-    text-decoration: none;
-    color: $color-light;
-    background-color: $color-primary;
-    border-radius: 5px;
-    transition: background-color 0.3s ease, transform 0.2s ease;
-}
-
-.right-buttons .btn:hover {
-    background-color: $color-tertiary;
-    transform: translateY(-3px);
+    .btn {
+    @extend .btn-style;
+    }
 }
 
 //powitanie
@@ -153,6 +142,7 @@ footer {
     }
 }
 
+// container używany w większości widoków pełniący też funkcję wrappera
 .container {
     min-height: calc(93vh - var(--header-height) - var(--footer-height));
     height: fit-content;
@@ -244,7 +234,37 @@ form {
         }
 }
 
-//strona główna
+// pasek wyszukiwania i filtrowania
+.toolbar {
+    display: flex;
+    gap: $spacing-medium;
+    margin-bottom: $spacing-medium;
+
+    input, select{
+        padding: $spacing-small;
+        border-radius: 4px;
+        border: 1px solid $color-border;
+    }
+
+    input {
+        width: 220px;
+        margin-right: -10px;
+    }
+
+    button {
+        padding-left: 0;
+        border: none;
+        cursor: pointer;
+        background-color: transparent;
+        transition: transform 0.3s ease;
+    }
+
+    button:hover {
+        transform: scale(1.2);
+    }
+}
+
+// strona główna
 .hero-section {
     background-size: cover;
     background-position: center;
@@ -256,14 +276,14 @@ form {
     justify-content: center;
 }
 
-//Overlay
+// overlay dla zdjęcia w tle
 .hero-overlay {
     position: relative;
     top: 0;
     left: 0;
     width: 100%;
     min-height: inherit;
-    background-color: rgba(0, 0, 0, 0.5);  //ciemna nakładka
+    background-color: rgba(0, 0, 0, 0.5);  // przyciemnienie
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -297,6 +317,7 @@ form {
     padding: 10px;
 
     h3 {
+        padding-top: 1.5rem;
         font-size: 1.5rem;
         font-weight: $font-weight-bold;
         color: $color-title;
@@ -308,6 +329,7 @@ form {
     }
 
     .btn {
+        margin-top: 1rem;
         display: inline-block;
         background-color: $color-primary;
         color: $color-light;
@@ -336,70 +358,6 @@ form {
     &:hover {
         transform: translateY(-10px);
         box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
-    }
-}
-
-.movies-list {
-    text-align: center;
-    color: $color-light;
-    width: 60vh;
-
-    h2 {
-        font-size: 2.5rem;
-        font-weight: $font-weight-bold;
-        color: $color-primary;
-        margin-bottom: $spacing-large;
-    }
-
-    .movie-cards {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-        gap: 1rem;
-        margin-bottom: $spacing-small;
-        justify-items: center;
-    }
-
-    .movie-card {
-        background-color: rgba(255, 255, 255, 0.8);
-        padding: $spacing-small;
-        padding-bottom: $spacing-medium;
-        margin: $spacing-small;
-        border-radius: 8px;
-        box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
-        width: 100%;
-        max-width: 300px;
-        transition: transform 0.3s ease;
-        color: $color-dark;
-
-        h3 {
-            font-size: 1.3rem;
-            font-weight: $font-weight-bold;
-            color: $color-title;
-        }
-
-        p {
-            font-size: 1rem;
-            color: $color-secondary;
-        }
-
-        .btn {
-            display: inline-block;
-            padding: $spacing-small $spacing-medium;
-            background-color: $color-primary;
-            color: $color-light;
-            text-decoration: none;
-            border-radius: 4px;
-            font-weight: $font-weight-bold;
-            transition: background-color 0.3s ease;
-
-            &:hover {
-                background-color: $color-hover;
-            }
-        }
-
-        &:hover {
-            transform: translateY(-10px);
-        }
     }
 }
 
@@ -494,7 +452,7 @@ form {
     }
 }
 
-//admin
+// admin
 .dashboard-stats {
     display: flex;
     flex-direction: column;
@@ -533,39 +491,8 @@ form {
     }
 }
 
-.button {
-    display: inline-block;
-    padding: $spacing-small $spacing-medium;
-    background-color: $color-primary;
-    color: $color-light;
-    border: none;
-    border-radius: 4px;
-    text-decoration: none;
-    font-weight: $font-weight-bold;
-    cursor: pointer;
-
-    &:hover {
-        background-color: $color-hover;
-    }
-}
-
-.btn {
-    display: inline-block;
-    background-color: $color-primary;
-    color: $color-light;
-    padding: $spacing-small $spacing-medium;
-    text-decoration: none;
-    border-radius: 4px;
-    font-weight: $font-weight-bold;
-    transition: background-color 0.3s;
-
-    &:hover {
-        background-color: $color-hover;
-    }
-}
-
-//tabela movie
-.movie-table {
+// uniwersalny wygląd tabeli
+.table {
     width: 100%;
     border-collapse: collapse;
     margin-top: $spacing-medium;
@@ -602,17 +529,29 @@ form {
     }
 }
 
-//Przycisk Edytuj i Usuń
+// dziedziczenie wyglądu tabel dla widoków filmów i recenzji
+.movie-table,
+.reviews-table {
+    @extend .table; 
+}
+
+// uniwersalny styl przycisków
 .btn {
     display: inline-block;
     padding: $spacing-small $spacing-medium;
     font-weight: $font-weight-bold;
+    background-color: $color-primary;
+    color: $color-light;
     border-radius: 4px;
     text-align: center;
     text-decoration: none;
     cursor: pointer;
     border: none;
     margin-right: $spacing-small;
+
+    &:hover {
+        background-color: $color-hover;
+    }
 
     &.btn-warning {
         background-color: $color-warning;
@@ -642,6 +581,65 @@ form {
     }
 }
 
+// dziedziczenie stylu przycisków dla widoków filmów i recenzji
+.reviews-table .btn,
+.movie-table .btn {
+    @extend .btn;
+}
+
+// kontener dla kafelki z filmem
+.movie-details-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 82vh;
+    padding: 40px;
+    background-color: $color-background;
+}
+
+// kafelka ze szczegółami filmu
+.movie-card {
+    background-color: rgba(255, 255, 255, 0.8);
+    border-radius: 16px;
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.15);
+    padding: 60px;
+    max-width: 900px;
+    text-align: center;
+    margin: 20px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+
+    h1 {
+        font-size: 3.5rem; 
+        margin-bottom: 30px;
+        color: #222222;
+    }
+
+    p {
+        font-size: 1.25rem;
+        color: #444444;
+        margin-bottom: 25px;
+        line-height: 1.8;
+    }
+
+    .btn {
+        display: inline-block;
+        padding: 15px 30px;
+        font-size: 1.2rem;
+        background-color: $color-success;
+        color: $color-light;
+        border-radius: 8px;
+        text-decoration: none;
+        font-weight: bold;
+        transition: background-color 0.3s ease, transform 0.2s ease;
+    }
+    
+    .btn:hover {
+        background-color: $color-tertiary;
+        transform: translateY(-4px);
+    }
+}
+
+// responsywność
 @media (max-width: 768px) {
     .movie-table th, .movie-table td {
         padding: $spacing-small;
@@ -654,137 +652,4 @@ form {
     .movie-table td {
         max-width: none;
     }
-}
-
-//Tabela z recenzjami
-.reviews-table {
-    width: 100%;
-    border-collapse: collapse;
-    margin-top: $spacing-medium;
-
-    th, td {
-        padding: $spacing-small;
-        text-align: left;
-        border: 1px solid $color-border;
-    }
-
-    th {
-        background-color: $color-primary;
-        color: $color-light;
-        font-weight: $font-weight-bold;
-    }
-
-    tr:nth-child(even) {
-        background-color: $color-background;
-    }
-
-    tr:nth-child(odd) {
-        background-color: $color-light;
-    }
-
-    td {
-        max-width: 200px;
-        overflow: hidden;
-        text-overflow: ellipsis;
-        white-space: nowrap;
-    }
-
-    td a {
-        text-decoration: none;
-    }
-}
-
-//Przycisk Edytuj i Usuń dla recenzji
-.reviews-table .btn {
-    display: inline-block;
-    padding: $spacing-small $spacing-medium;
-    font-weight: $font-weight-bold;
-    border-radius: 4px;
-    text-align: center;
-    text-decoration: none;
-    cursor: pointer;
-    border: none;
-    margin-right: $spacing-small;
-
-    &.btn-warning {
-        background-color: $color-warning;
-        color: $color-dark;
-
-        &:hover {
-            background-color: darken($color-warning, 10%);
-        }
-    }
-
-    &.btn-danger {
-        background-color: $color-error;
-        color: $color-light;
-
-        &:hover {
-            background-color: darken($color-error, 10%);
-        }
-    }
-
-    &.btn-success {
-        background-color: $color-success;
-        color: $color-light;
-
-        &:hover {
-            background-color: darken($color-success, 10%);
-        }
-    }
-}
-
-//pojedynczy film
-.movie-details-container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    min-height: 82vh;
-    padding: 40px;
-    background-color: $color-background;
-}
-
-.movie-card {
-    background-color: rgba(255, 255, 255, 0.8);
-    border-radius: 16px;
-    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.15);
-    padding: 60px;
-    max-width: 900px;
-    text-align: center;
-    margin: 20px;
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-}
-.movie-card:hover {
-    transform: translateY(-8px);
-    box-shadow: 0 12px 25px rgba(0, 0, 0, 0.25);
-}
-
-.movie-card h1 {
-    font-size: 3.5rem; 
-    margin-bottom: 30px;
-    color: #222222;
-}
-
-.movie-card p {
-    font-size: 1.25rem;
-    color: #444444;
-    margin-bottom: 25px;
-    line-height: 1.8;
-}
-
-.movie-card .btn {
-    display: inline-block;
-    padding: 15px 30px;
-    font-size: 1.2rem;
-    background-color: $color-success;
-    color: $color-light;
-    border-radius: 8px;
-    text-decoration: none;
-    font-weight: bold;
-    transition: background-color 0.3s ease, transform 0.2s ease;
-}
-
-.movie-card .btn:hover {
-    background-color: $color-tertiary;
-    transform: translateY(-4px);
 }

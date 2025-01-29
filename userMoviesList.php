@@ -3,12 +3,6 @@ include 'config/db.php';
 include 'helpers/auth.php';
 include 'includes/header.php';
 
-//czy admin
-if (!isAuthenticated() || $_SESSION['role'] === 'Admin') {
-    header('Location: generalLogin.php');
-    exit;
-}
-
 //lista filmów
 $conn = connectToDatabase();
 $stmt = $conn->prepare("SELECT m.IdMovie, m.Title, m.ReleaseYear, m.Description, 
@@ -24,10 +18,21 @@ $movies = $stmt->fetchAll(PDO::FETCH_ASSOC);
 <div class="container">
     <h1>Lista filmów</h1>
 
+    <div class="toolbar">
+        <input type="text" id="searchBox" placeholder="Szukaj..." />
+        <button onclick="filterMovies()">🔍</button>
+        <select id="sortSelect" onchange="sortMovies()">
+            <option value="Title">Sortuj według tytułu</option>
+            <option value="ReleaseYear">Sortuj według roku wydania</option>
+            <option value="AverageRating">Sortuj według oceny</option>
+            <option value="Genre">Sortuj według gatunku</option>
+        </select>
+    </div>
+
     <?php if (empty($movies)): ?>
         <p>Brak filmów w bazie danych.</p>
     <?php else: ?>
-        <table class="movie-table">
+        <table class="movie-table" id="movieTable">
             <thead>
                 <tr>
                     <th>ID</th>
@@ -61,9 +66,12 @@ $movies = $stmt->fetchAll(PDO::FETCH_ASSOC);
                         </td>
                     </tr>
                 <?php endforeach; ?>
+                
             </tbody>
         </table>
     <?php endif; ?>
 </div>
+
+<script src="js/functions.js"></script>
 
 <?php include 'includes/footer.php'; ?>
