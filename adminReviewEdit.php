@@ -30,17 +30,17 @@ if (!$review) {
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $rating = $_POST['rating'];
-    $reviewText = trim($_POST['review']);
+    $contentText = trim($_POST['review']);
 
     $errors = [];
 
-    if (empty($reviewText)) {
+    if (empty($contentText)) {
         $errors[] = "Treść recenzji jest wymagana.";
     }
 
     if (empty($errors)) {
-        $stmtUpdate = $conn->prepare("UPDATE Reviews SET Review = :review, Rating = :rating WHERE IdReview = :id");
-        $stmtUpdate->bindParam(':review', $reviewText);
+        $stmtUpdate = $conn->prepare("UPDATE Reviews SET Content = :content, Rating = :rating WHERE IdReview = :id");
+        $stmtUpdate->bindParam(':content', $contentText);
         $stmtUpdate->bindParam(':rating', $rating);
         $stmtUpdate->bindParam(':id', $reviewId, PDO::PARAM_INT);
 
@@ -76,7 +76,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     <form method="POST" action="adminReviewEdit.php?id=<?php echo htmlspecialchars($reviewId); ?>">
         <label for="rating">Ocena:</label>
-        <input type="number" name="rating" id="rating" value="<?php echo htmlspecialchars($review['Rating']); ?>" min="1" max="10" required>
+        <input type="number" name="rating" id="rating" value="<?php echo htmlspecialchars($review['Rating']); ?>" min="1" max="5" required>
 
         <label for="review">Recenzja:</label>
         <textarea name="review" id="review" required><?php echo htmlspecialchars($review['Content']); ?></textarea>

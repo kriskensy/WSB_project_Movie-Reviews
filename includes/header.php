@@ -32,7 +32,11 @@ session_start();
                 <?php if (isset($_SESSION['role']) && $_SESSION['role'] === 'Admin'): ?>
                     <a href="adminDashboard.php" class="btn">Panel Administratora</a>
                 <?php endif; ?>
-                <a href="userProfile.php" class="btn">Mój profil</a>
+
+                <?php if ($_SESSION['role'] !== 'Admin'): ?>
+                    <a href="userProfile.php" class="btn">Mój profil</a>
+                <?php endif; ?>
+                
                 <a href="generalLogout.php" class="btn">Wyloguj</a>
             <?php else: ?>
                 <a href="generalLogin.php" class="btn">Zaloguj</a>
