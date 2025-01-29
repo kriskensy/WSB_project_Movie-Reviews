@@ -45,7 +45,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <title>Logowanie</title>
 </head>
 <body>
-    <div class="main-content">
+    <div class="container">
     <h1>Logowanie</h1>
 <?php if (isset($error)): ?>
     <p style="color: red;"><?= htmlspecialchars($error) ?></p>

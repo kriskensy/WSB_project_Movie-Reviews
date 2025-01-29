@@ -32,19 +32,21 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <title>Rejestracja</title>
 </head>
 <body>
-<h1>Rejestracja</h1>
-<?php if (isset($error)): ?>
-    <p style="color: red;"><?= htmlspecialchars($error) ?></p>
-<?php endif; ?>
-<form method="POST" action="generalRegister.php">
-    <label for="username">Nazwa użytkownika:</label>
-    <input type="text" name="username" id="username" required>
-    <label for="email">E-mail:</label>
-    <input type="email" name="email" id="email" required>
-    <label for="password">Hasło:</label>
-    <input type="password" name="password" id="password" required>
-    <button type="submit">Zarejestruj się</button>
-</form>
+    <div class="container">
+        <h1>Rejestracja</h1>
+        <?php if (isset($error)): ?>
+            <p style="color: red;"><?= htmlspecialchars($error) ?></p>
+        <?php endif; ?>
+        <form method="POST" action="generalRegister.php">
+            <label for="username">Nazwa użytkownika:</label>
+            <input type="text" name="username" id="username" required>
+            <label for="email">E-mail:</label>
+            <input type="email" name="email" id="email" required>
+            <label for="password">Hasło:</label>
+            <input type="password" name="password" id="password" required>
+            <button type="submit">Zarejestruj się</button>
+        </form>
+    </div>
 </body>
 </html>
 <?php include 'includes/footer.php'; ?>

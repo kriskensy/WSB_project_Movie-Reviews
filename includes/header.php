@@ -12,8 +12,13 @@ session_start();
 <body>
 <header>
     <nav class="navbar">
+    <a href="index.php" class="logo">
+            <img src="images/movie-reviews-logo.svg" alt="Logo" class="logo">
+            <h1 class="logo">Movie Reviews</h1>
+        </a>
         <div class="center-button">
             <a href="index.php" class="btn btn-home">Strona główna</a>
+            <a href="generalSearch.php" class="btn btn-home">Szukaj</a>
         </div>
         <div class="right-buttons">
             <?php if (isset($_SESSION['user_id'])): ?>

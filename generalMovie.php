@@ -36,6 +36,7 @@ $ratingStmt->execute();
 $avgRating = $ratingStmt->fetch(PDO::FETCH_ASSOC)['AvgRating'] ?? 0;
 ?>
 
+
 <div class="movie-details-container" style="background: url('images/movie-reviews-background.jpg') no-repeat center center/cover;">
     <div class="movie-card">
         <h1><?php echo htmlspecialchars($movie['Title']); ?></h1>
@@ -44,7 +45,8 @@ $avgRating = $ratingStmt->fetch(PDO::FETCH_ASSOC)['AvgRating'] ?? 0;
         <p><strong>Rok produkcji:</strong> <?php echo htmlspecialchars($movie['ReleaseYear']); ?></p>
         <p><strong>Średnia ocena:</strong> <?php echo number_format($avgRating, 1); ?>/5</p>
         <a href="userReviewAdd.php?id=<?php echo $movieId; ?>" class="btn">Dodaj recenzję</a>
-    </div>
+</div>
+
 </div>
 
 <?php include 'includes/footer.php'; ?>

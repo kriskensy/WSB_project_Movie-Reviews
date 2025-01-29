@@ -1,12 +1,13 @@
 @import url('https://fonts.googleapis.com/css?family=Oswald:400,600|Sacramento|Source+Sans+Pro:300&subset=latin-ext'); //fonty googla
+@import url('https://unpkg.com/flickity@2/dist/flickity.min.css'); // karuzela
 
 // Kolory
-$color-primary: #ffcc00;      //główny akcenty
+$color-primary: #d8a014;      //główny akcenty
 $color-secondary: #333;      //tło nagłówka
 $color-dark: #222;           //footer
 $color-light: #fff;          //jasny tekst
 $color-muted: #ccc;          //tekst na ciemnym tle
-$color-hover: #ffd633;       //hover
+$color-hover: #deb309;       //hover
 $color-background: #f4f4f4;  //tło aplikacji
 $color-tertiary: #007bff;    //akcent linki
 $color-error: #dc3545;       //błędy
@@ -14,6 +15,7 @@ $color-success: #28a745;     //sukcesy
 $color-info: #17a2b8;        //informacje
 $color-warning: #ffc107;     //ostrzeżenia
 $color-border: #ddd;         //bordery formularzy
+$color-title: #a72929;       // tytuły filmów
 
 // Typografia
 $font-family-base: 'Arial', sans-serif;
@@ -31,7 +33,12 @@ $spacing-large: 2rem;
 
 $container-width: 1200px;    //max szerokość kontenera
 
-body {
+:root {
+    --header-height: 35px;
+    --footer-height: 35px;
+  }
+
+body, html {
     background-color: $color-background;
     font-family: $font-family-base;
     color: $color-secondary;
@@ -39,8 +46,13 @@ body {
     margin: 0;
     padding: 0;
 }
+
 .main-content {
     flex: 1;
+}
+
+.main-content h1 {
+    text-align: center;
 }
 
 //header navbar
@@ -48,20 +60,40 @@ body {
     display: flex;
     justify-content: space-between;
     align-items: center;
+    height: var(--header-height);
     padding: 15px 30px;
     background-color: $color-secondary;
     color: $color-light;
 }
 
+.logo {
+    display: flex;
+    flex-direction: row;
+    width: 140px;
+    height: 40px;
+    margin: 0;
+    padding: 2px;
+    margin-left: $spacing-small;
+    font-size: large;
+    align-items: center;
+    text-decoration: none;
+    color: $color-light;
+    cursor: pointer;
+}
+
+.logo:hover {
+    transform: scale(0.98);
+}
+
 //homepage button
 .center-button {
     flex: 1;
-    text-align: center;
+    margin-left: 5rem;
 }
 
 .center-button .btn-home {
     padding: 10px 20px;
-    font-size: 1.2rem;
+    font-size: 1rem;
     font-weight: bold;
     text-decoration: none;
     color: $color-light;
@@ -83,7 +115,7 @@ body {
 
 .right-buttons .btn {
     display: inline-block;
-    padding: 10px 15px;
+    padding: 10px 20px;
     margin-left: 10px;
     font-size: 1rem;
     font-weight: bold;
@@ -107,14 +139,13 @@ body {
     font-style: italic;
 }
 
-
 footer {
-    background-color: $color-dark;
+    background-color: $color-secondary;
     color: $color-muted;
     text-align: center;
-    padding: $spacing-medium 0;
-    position: relative;
-    bottom: 0;
+    height: var(--footer-height);
+    padding: 1rem 0;
+    width: 100%;
 
     p {
         margin: 0;
@@ -123,9 +154,21 @@ footer {
 }
 
 .container {
+    min-height: calc(93vh - var(--header-height) - var(--footer-height));
+    height: fit-content;
     max-width: $container-width;
     margin: 0 auto;
     padding: 0 $spacing-medium;
+    flex: 1;
+
+    h1 {
+        text-align: center;
+    }
+
+    p {
+        text-align: center;
+        font-style: italic;
+    }
 }
 
 form {
@@ -155,6 +198,13 @@ form {
         }
     }
 
+    textarea {
+        min-width: 395px;
+        max-width: 395px;
+        min-height: 1.5rem;
+        max-height: 15rem;
+    }
+
     button {
         background-color: $color-primary;
         color: $color-light;
@@ -163,35 +213,35 @@ form {
         border-radius: 4px;
         font-weight: $font-weight-bold;
         cursor: pointer;
-
+    
         &:hover {
             background-color: $color-hover;
         }
     }
+    
+        .error,
+        .success,
+        .info,
+        .warning {
+            font-size: 0.875rem;
+            margin-top: $spacing-small;
+        }
 
-    .error {
-        color: $color-error;
-        font-size: 0.875rem;
-        margin-top: $spacing-small;
-    }
+        .error {
+            color: $color-error;
+        }
 
-    .success {
-        color: $color-success;
-        font-size: 0.875rem;
-        margin-top: $spacing-small;
-    }
+        .success {
+            color: $color-success;
+        }
 
-    .info {
-        color: $color-info;
-        font-size: 0.875rem;
-        margin-top: $spacing-small;
-    }
+        .info {
+            color: $color-info;
+        }
 
-    .warning {
-        color: $color-warning;
-        font-size: 0.875rem;
-        margin-top: $spacing-small;
-    }
+        .warning {
+            color: $color-warning;
+        }
 }
 
 //strona główna
@@ -199,7 +249,8 @@ form {
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
-    height: 100vh; //sekcja zajmuje całą wysokość
+    height: fit-content;
+    min-height: 89vh;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -211,7 +262,7 @@ form {
     top: 0;
     left: 0;
     width: 100%;
-    height: 100%;
+    min-height: inherit;
     background-color: rgba(0, 0, 0, 0.5);  //ciemna nakładka
     display: flex;
     flex-direction: column;
@@ -228,28 +279,91 @@ form {
     font-family: $font-header;
 }
 
+.carousel-container {
+    min-height: calc(93vh - var(--header-height) - var(--footer-height));
+    height: fit-content;
+
+    h1 {
+        margin-bottom: 5rem;
+    }
+    
+    h2 {
+        color: $color-light;
+    }
+}
+
+.carousel {
+    width: 50vw;
+    padding: 10px;
+
+    h3 {
+        font-size: 1.5rem;
+        font-weight: $font-weight-bold;
+        color: $color-title;
+    }
+
+    p {
+        font-size: 1rem;
+        color: $color-secondary;
+    }
+
+    .btn {
+        display: inline-block;
+        background-color: $color-primary;
+        color: $color-light;
+        text-decoration: none;
+        border-radius: 4px;
+        font-weight: $font-weight-bold;
+        transition: background-color 0.3s ease;
+
+        &:hover {
+            background: $color-hover;
+        }
+    }
+}
+
+.carousel-cell {
+    width: 300px;
+    height: 360px;
+    margin-top: 20px;
+    margin-right: 18px;
+    background: rgba($color-light, 0.7);
+    border-radius: 15px;
+    text-align: center;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.15);
+    transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+
+    &:hover {
+        transform: translateY(-10px);
+        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+    }
+}
+
 .movies-list {
     text-align: center;
     color: $color-light;
+    width: 60vh;
 
     h2 {
         font-size: 2.5rem;
         font-weight: $font-weight-bold;
         color: $color-primary;
-        margin-bottom: $spacing-medium;
+        margin-bottom: $spacing-large;
     }
 
     .movie-cards {
         display: grid;
         grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-        gap: 3rem;
-        margin: $spacing-small;
+        gap: 1rem;
+        margin-bottom: $spacing-small;
         justify-items: center;
     }
 
     .movie-card {
         background-color: rgba(255, 255, 255, 0.8);
-        padding: $spacing-medium;
+        padding: $spacing-small;
+        padding-bottom: $spacing-medium;
+        margin: $spacing-small;
         border-radius: 8px;
         box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
         width: 100%;
@@ -258,9 +372,9 @@ form {
         color: $color-dark;
 
         h3 {
-            font-size: 1.25rem;
+            font-size: 1.3rem;
             font-weight: $font-weight-bold;
-            color: $color-primary;
+            color: $color-title;
         }
 
         p {
@@ -383,7 +497,9 @@ form {
 //admin
 .dashboard-stats {
     display: flex;
-    justify-content: space-between;
+    flex-direction: column;
+    width: 400px;
+    justify-self:center;
     gap: $spacing-medium;
     margin-top: $spacing-large;
 
@@ -401,7 +517,7 @@ form {
         }
 
         p {
-            font-size: 2rem;
+            font-size: 2.5rem;
             font-weight: $font-weight-bold;
         }
 
@@ -411,7 +527,7 @@ form {
             font-weight: $font-weight-normal;
 
             &:hover {
-                color: $color-hover;
+                background-color: $color-hover;
             }
         }
     }
@@ -623,7 +739,7 @@ form {
     display: flex;
     justify-content: center;
     align-items: center;
-    min-height: calc(100vh - 120px);
+    min-height: 82vh;
     padding: 40px;
     background-color: $color-background;
 }

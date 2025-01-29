@@ -141,7 +141,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <input type="date" name="releaseYear" id="releaseYear" value="<?php echo htmlspecialchars($movie['ReleaseYear']); ?>" max="<?php echo date('Y'); ?>" required>
 
         <label for="description">Opis filmu:</label>
-        <input type="text" name="description" id="description" value="<?php echo htmlspecialchars($movie['Description']); ?>" required>
+        <textarea type="text" name="description" id="description" value="<?php echo htmlspecialchars($movie['Description']); ?>" required></textarea>
 
         <button type="submit">Zapisz zmiany</button>
     </form>

@@ -4,6 +4,8 @@ include 'helpers/auth.php';
 include 'includes/header.php';
 ?>
 
-<!-- tutaj trzeba powypełniać całą stronę-->
+<div class="container">
+    
+</div>
 
 <?php include 'includes/footer.php'; ?>

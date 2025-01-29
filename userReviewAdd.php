@@ -72,20 +72,22 @@ if (!$movie) {
 
 ?>
 
-<h1>Dodaj recenzję dla filmu: <?php echo htmlspecialchars($movie['Title']); ?></h1>
+<div class="container">
+    <h1>Dodaj recenzję dla filmu: <?php echo htmlspecialchars($movie['Title']); ?></h1>
 
-<?php if ($existingReview): ?>
-    <p>Masz już dodaną recenzję dla tego filmu. Możesz ją edytować.</p>
-<?php endif; ?>
+    <?php if ($existingReview): ?>
+        <p>Masz już dodaną recenzję dla tego filmu. Możesz ją edytować.</p>
+    <?php endif; ?>
 
-<form method="POST">
-    <label for="content">Tekst recenzji:</label>
-    <textarea name="content" id="content" rows="5" required><?php echo $existingReview['Content'] ?? ''; ?></textarea><br>
+    <form method="POST">
+        <label for="content">Tekst recenzji:</label>
+        <textarea name="content" id="content" rows="5" required><?php echo $existingReview['Content'] ?? ''; ?></textarea><br>
 
-    <label for="rating">Ocena (1-5):</label>
-    <input type="number" name="rating" id="rating" min="1" max="5" required value="<?php echo $existingReview['Rating'] ?? ''; ?>"><br>
+        <label for="rating">Ocena (1-5):</label>
+        <input type="number" name="rating" id="rating" min="1" max="5" required value="<?php echo $existingReview['Rating'] ?? ''; ?>"><br>
 
-    <button type="submit"><?php echo $existingReview ? 'Edytuj recenzję' : 'Dodaj recenzję'; ?></button>
-</form>
+        <button type="submit"><?php echo $existingReview ? 'Edytuj recenzję' : 'Dodaj recenzję'; ?></button>
+    </form>
+</div>
 
 <?php include 'includes/footer.php'; ?>

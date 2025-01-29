@@ -52,16 +52,19 @@ if ($reviewId) {
     <title>Edytuj Recenzję</title>
 </head>
 <body>
-<h1>Edytuj swoją recenzję</h1>
-<form method="POST">
-    <label for="content">Tekst recenzji:</label>
-    <textarea name="content" id="content" rows="5" required><?php echo htmlspecialchars($review['Content']); ?></textarea><br>
+    <div class="container">
+        <h1>Edytuj swoją recenzję</h1>
+        <form method="POST">
+            <label for="content">Tekst recenzji:</label>
+            <textarea name="content" id="content" rows="5" required><?php echo htmlspecialchars($review['Content']); ?></textarea><br>
 
-    <label for="rating">Ocena (1-5):</label>
-    <input type="number" name="rating" id="rating" min="1" max="5" value="<?php echo $review['Rating']; ?>" required><br>
+            <label for="rating">Ocena (1-5):</label>
+            <input type="number" name="rating" id="rating" min="1" max="5" value="<?php echo $review['Rating']; ?>" required><br>
 
-    <button type="submit">Zapisz zmiany</button>
-</form>
+            <button type="submit">Zapisz zmiany</button>
+        </form>
+    </div>
 </body>
 </html>
+
 <?php include 'includes/footer.php'; ?>
