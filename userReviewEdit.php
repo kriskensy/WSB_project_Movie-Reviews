@@ -2,6 +2,7 @@
 include 'config/db.php';
 include 'helpers/auth.php';
 include 'includes/header.php';
+include 'helpers/validation.php';
 
 if (!isAuthenticated()) {
     header('Location: generalLogin.php');
@@ -30,14 +31,19 @@ if ($reviewId) {
         $newContent = $_POST['content'];
         $newRating = $_POST['rating'];
 
-        $stmt = $conn->prepare("UPDATE Reviews SET Content = :content, Rating = :rating WHERE IdReview = :id");
-        $stmt->bindParam(':content', $newContent);
-        $stmt->bindParam(':rating', $newRating);
-        $stmt->bindParam(':id', $reviewId);
-        $stmt->execute();
+        //wywołanie funkcji walidującej dane wprowadzane do formularza
+        $errors = validateReviewForm($_POST);
 
-        header("Location: userProfile.php");
-        exit;
+        if(empty($errors)){
+            $stmt = $conn->prepare("UPDATE Reviews SET Content = :content, Rating = :rating WHERE IdReview = :id");
+            $stmt->bindParam(':content', $newContent);
+            $stmt->bindParam(':rating', $newRating);
+            $stmt->bindParam(':id', $reviewId);
+            $stmt->execute();
+    
+            header("Location: userProfile.php");
+            exit;
+        }
     }
 } else {
     echo "Nieprawidłowe żądanie.";
@@ -52,19 +58,31 @@ if ($reviewId) {
     <title>Edytuj Recenzję</title>
 </head>
 <body>
-    <div class="container">
-        <h1>Edytuj swoją recenzję</h1>
-        <form method="POST">
-            <label for="content">Tekst recenzji:</label>
-            <textarea name="content" id="content" rows="5" required><?php echo htmlspecialchars($review['Content']); ?></textarea><br>
+<h1>Edytuj swoją recenzję</h1>
 
-            <label for="rating">Ocena (1-5):</label>
-            <input type="number" name="rating" id="rating" min="1" max="5" value="<?php echo $review['Rating']; ?>" required><br>
-
-            <button type="submit">Zapisz zmiany</button>
-        </form>
+<!-- komunikaty walidacji -->
+<div class="error" id="error-messages">
+        <?php if (!empty($errors)): ?>
+            <ul>
+                <?php foreach ($errors as $error): ?>
+                    <li><?php echo htmlspecialchars($error); ?></li>
+                <?php endforeach; ?>
+            </ul>
+        <?php endif; ?>
     </div>
+
+<form method="POST" id="reviewForm">
+    <label for="content">Tekst recenzji:</label>
+    <textarea name="content" id="content" rows="5" ><?php echo htmlspecialchars($review['Content']); ?></textarea><br>
+
+    <label for="rating">Ocena (1-5):</label>
+    <input type="number" name="rating" id="rating" min="1" max="5" value="<?php echo $review['Rating']; ?>" ><br>
+
+    <button type="submit">Zapisz zmiany</button>
+</form>
 </body>
 </html>
-
 <?php include 'includes/footer.php'; ?>
+
+<!-- podpięcie skryptu JS do walidacji po stronie klienta -->
+<script src="js/script.js"></script>

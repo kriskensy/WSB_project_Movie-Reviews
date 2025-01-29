@@ -2,6 +2,7 @@
 include 'config/db.php';
 include 'helpers/auth.php';
 include 'includes/header.php';
+include 'helpers/validation.php';
 
 if (!isAuthenticated()) {
     header('Location: generalLogin.php');
@@ -28,35 +29,40 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $content = $_POST['content'];
     $rating = $_POST['rating'];
 
-    if ($existingReview) {
-        $stmt = $conn->prepare("UPDATE Reviews SET Content = :content, Rating = :rating WHERE IdReview = :reviewId");
-        $stmt->bindParam(':content', $content);
-        $stmt->bindParam(':rating', $rating);
-        $stmt->bindParam(':reviewId', $existingReview['IdReview']);
-        $stmt->execute();
-    } else {
-        $stmt = $conn->prepare("INSERT INTO Reviews (IdUser, IdMovie, Content, Rating, Date) VALUES (:userId, :movieId, :content, :rating, CURRENT_TIMESTAMP)"); //current ustawia automatycznie aktualną datę
-        $stmt->bindParam(':userId', $_SESSION['user_id']);
+    //wywołanie funkcji walidującej dane wprowadzane do formularza
+    $errors = validateReviewForm($_POST);
+    
+    if(empty($errors)){
+        if ($existingReview) {
+            $stmt = $conn->prepare("UPDATE Reviews SET Content = :content, Rating = :rating WHERE IdReview = :reviewId");
+            $stmt->bindParam(':content', $content);
+            $stmt->bindParam(':rating', $rating);
+            $stmt->bindParam(':reviewId', $existingReview['IdReview']);
+            $stmt->execute();
+        } else {
+            $stmt = $conn->prepare("INSERT INTO Reviews (IdUser, IdMovie, Content, Rating, Date) VALUES (:userId, :movieId, :content, :rating, CURRENT_TIMESTAMP)"); //current ustawia automatycznie aktualną datę
+            $stmt->bindParam(':userId', $_SESSION['user_id']);
+            $stmt->bindParam(':movieId', $movieId);
+            $stmt->bindParam(':content', $content);
+            $stmt->bindParam(':rating', $rating);
+            $stmt->execute();
+        }
+    
+        //obliczanie średniej ocen
+        $stmt = $conn->prepare("SELECT AVG(Rating) AS averageRating FROM Reviews WHERE IdMovie = :movieId");
         $stmt->bindParam(':movieId', $movieId);
-        $stmt->bindParam(':content', $content);
-        $stmt->bindParam(':rating', $rating);
         $stmt->execute();
+        $averageRating = $stmt->fetch(PDO::FETCH_ASSOC)['averageRating'];
+    
+        //aktualizacja średniej ocen (bez aktualizacji daty)
+        $stmt = $conn->prepare("UPDATE Movies SET AverageRating = :averageRating WHERE IdMovie = :movieId");
+        $stmt->bindParam(':averageRating', $averageRating);
+        $stmt->bindParam(':movieId', $movieId);
+        $stmt->execute();
+    
+        header("Location: userProfile.php");
+        exit;
     }
-
-    //obliczanie średniej ocen
-    $stmt = $conn->prepare("SELECT AVG(Rating) AS averageRating FROM Reviews WHERE IdMovie = :movieId");
-    $stmt->bindParam(':movieId', $movieId);
-    $stmt->execute();
-    $averageRating = $stmt->fetch(PDO::FETCH_ASSOC)['averageRating'];
-
-    //aktualizacja średniej ocen (bez aktualizacji daty)
-    $stmt = $conn->prepare("UPDATE Movies SET AverageRating = :averageRating WHERE IdMovie = :movieId");
-    $stmt->bindParam(':averageRating', $averageRating);
-    $stmt->bindParam(':movieId', $movieId);
-    $stmt->execute();
-
-    header("Location: userProfile.php");
-    exit;
 }
 
 //pobranie filmu
@@ -71,23 +77,35 @@ if (!$movie) {
 }
 
 ?>
+<div class="container"> 
+<h1>Dodaj recenzję dla filmu: <?php echo htmlspecialchars($movie['Title']); ?></h1>
 
-<div class="container">
-    <h1>Dodaj recenzję dla filmu: <?php echo htmlspecialchars($movie['Title']); ?></h1>
+<!-- komunikaty walidacji -->
+<div class="error" id="error-messages">
+        <?php if (!empty($errors)): ?>
+            <ul>
+                <?php foreach ($errors as $error): ?>
+                    <li><?php echo htmlspecialchars($error); ?></li>
+                <?php endforeach; ?>
+            </ul>
+        <?php endif; ?>
+    </div>
 
-    <?php if ($existingReview): ?>
-        <p>Masz już dodaną recenzję dla tego filmu. Możesz ją edytować.</p>
-    <?php endif; ?>
+<?php if ($existingReview): ?>
+    <p>Masz już dodaną recenzję dla tego filmu. Możesz ją edytować.</p>
+<?php endif; ?>
 
-    <form method="POST">
-        <label for="content">Tekst recenzji:</label>
-        <textarea name="content" id="content" rows="5" required><?php echo $existingReview['Content'] ?? ''; ?></textarea><br>
+<form method="POST" id="reviewForm">
+    <label for="content">Tekst recenzji:</label>
+    <textarea name="content" id="content" rows="5" ><?php echo $existingReview['Content'] ?? ''; ?></textarea><br>
 
-        <label for="rating">Ocena (1-5):</label>
-        <input type="number" name="rating" id="rating" min="1" max="5" required value="<?php echo $existingReview['Rating'] ?? ''; ?>"><br>
+    <label for="rating">Ocena (1-5):</label>
+    <input type="number" name="rating" id="rating" min="1" max="5"  value="<?php echo $existingReview['Rating'] ?? ''; ?>"><br>
 
-        <button type="submit"><?php echo $existingReview ? 'Edytuj recenzję' : 'Dodaj recenzję'; ?></button>
-    </form>
+    <button type="submit"><?php echo $existingReview ? 'Edytuj recenzję' : 'Dodaj recenzję'; ?></button>
+</form>
 </div>
-
 <?php include 'includes/footer.php'; ?>
+
+<!-- podpięcie skryptu JS do walidacji po stronie klienta -->
+<script src="js/script.js"></script>

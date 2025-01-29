@@ -113,10 +113,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     <form method="POST" action="adminMovieEdit.php?id=<?php echo htmlspecialchars($movieId); ?>">
         <label for="title">Tytuł filmu:</label>
-        <input type="text" name="title" id="title" value="<?php echo htmlspecialchars($movie['Title']); ?>" required>
+        <input type="text" name="title" id="title" value="<?php echo htmlspecialchars($movie['Title']); ?>" >
 
         <label for="director">Reżyser:</label>
-        <select name="director" id="director" required>
+        <select name="director" id="director" >
             <option value="">Wybierz reżysera</option>
             <?php foreach ($directors as $directorOption): ?>
                 <option value="<?php echo $directorOption['IdDirector']; ?>" 
@@ -127,7 +127,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         </select>
 
         <label for="genre">Gatunek:</label>
-        <select name="genre" id="genre" required>
+        <select name="genre" id="genre" >
             <option value="">Wybierz gatunek</option>
             <?php foreach ($genres as $genreOption): ?>
                 <option value="<?php echo $genreOption['IdGenre']; ?>" 
@@ -138,13 +138,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         </select>
 
         <label for="releaseYear">Rok produkcji:</label>
-        <input type="date" name="releaseYear" id="releaseYear" value="<?php echo htmlspecialchars($movie['ReleaseYear']); ?>" max="<?php echo date('Y'); ?>" required>
+        <input type="date" name="releaseYear" id="releaseYear" value="<?php echo htmlspecialchars($movie['ReleaseYear']); ?>" max="<?php echo date('Y'); ?>" >
 
         <label for="description">Opis filmu:</label>
-        <textarea type="text" name="description" id="description" value="<?php echo htmlspecialchars($movie['Description']); ?>" required></textarea>
+        <input type="text" name="description" id="description" value="<?php echo htmlspecialchars($movie['Description']); ?>" >
 
         <button type="submit">Zapisz zmiany</button>
     </form>
 </div>
 
 <?php include 'includes/footer.php'; ?>
+
+<!-- podpięcie skryptu JS do walidacji po stronie klienta -->
+<script src="js/script.js"></script>
