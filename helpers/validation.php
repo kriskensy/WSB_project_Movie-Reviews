@@ -32,4 +32,30 @@ function validateMovieForm($data) {
 
     return $errors;
 }
+
+function validateReviewForm($data) {
+    $errors = [];
+
+    $content = trim($data['content']);
+    $rating = $data['rating'];
+
+    //walidacja treści recenzji
+    if (empty($content)) {
+        $errors[] = "Treść recenzji nie może być pusta.";
+    }
+
+    if (strlen($content) > 2000) {
+        $errors[] = "Treść recenzji nie może przekraczać 2000 znaków.";
+    }
+
+    //walidacja oceny
+    if (empty($rating)) {
+        $errors[] = "Ocena jest wymagana.";
+    }
+
+    if (!is_numeric($rating) || $rating < 1 || $rating > 5) {
+        $errors[] = "Ocena musi być liczbą w zakresie od 1 do 5.";
+    }
+    return $errors;
+}
 ?>

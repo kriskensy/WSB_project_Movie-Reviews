@@ -74,10 +74,10 @@ $genres = $conn->query("SELECT IdGenre, Name FROM Genres")->fetchAll(PDO::FETCH_
     <!-- dodawanie filmu -->
     <form method="POST" action="adminMovieAdd.php" id="movieForm">
         <label for="title">Tytuł filmu:</label>
-        <input type="text" name="title" id="title" required>
+        <input type="text" name="title" id="title" >
 
         <label for="director">Reżyser:</label>
-        <select name="director" id="director" required>
+        <select name="director" id="director" >
             <option value="">Wybierz reżysera</option>
             <?php foreach ($directors as $director): ?>
                 <option value="<?php echo htmlspecialchars($director['IdDirector']); ?>">
@@ -87,7 +87,7 @@ $genres = $conn->query("SELECT IdGenre, Name FROM Genres")->fetchAll(PDO::FETCH_
         </select>
 
         <label for="genre">Gatunek:</label>
-        <select name="genre" id="genre" required>
+        <select name="genre" id="genre" >
             <option value="">Wybierz gatunek</option>
             <?php foreach ($genres as $genre): ?>
                 <option value="<?php echo htmlspecialchars($genre['IdGenre']); ?>">
@@ -97,10 +97,10 @@ $genres = $conn->query("SELECT IdGenre, Name FROM Genres")->fetchAll(PDO::FETCH_
         </select>
 
         <label for="releaseYear">Rok produkcji:</label>
-        <input type="date" name="releaseYear" id="releaseYear" required max="<?php echo date('Y'); ?>">
+        <input type="date" name="releaseYear" id="releaseYear"  max="<?php echo date('Y'); ?>">
 
         <label for="description">Opis filmu:</label>
-        <textarea name="description" id="description" required></textarea>
+        <textarea name="description" id="description" ></textarea>
 
         <button type="submit">Dodaj film</button>
     </form>

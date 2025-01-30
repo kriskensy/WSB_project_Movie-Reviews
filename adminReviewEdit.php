@@ -2,6 +2,7 @@
 include 'config/db.php';
 include 'helpers/auth.php';
 include 'includes/header.php';
+include 'helpers/validation.php';
 
 //czy admin
 if (!isAuthenticated() || $_SESSION['role'] !== 'Admin') {
@@ -30,13 +31,9 @@ if (!$review) {
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $rating = $_POST['rating'];
-    $contentText = trim($_POST['review']);
+    $contentText = trim($_POST['content']);
 
-    $errors = [];
-
-    if (empty($contentText)) {
-        $errors[] = "Treść recenzji jest wymagana.";
-    }
+    $errors = validateReviewForm($_POST);
 
     if (empty($errors)) {
         $stmtUpdate = $conn->prepare("UPDATE Reviews SET Content = :content, Rating = :rating WHERE IdReview = :id");
@@ -58,15 +55,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <div class="container">
     <h1>Edytuj recenzję</h1>
 
-    <?php if (!empty($errors)): ?>
-        <div class="error">
+    <!-- komunikaty walidacji -->
+    <div class="error" id="error-messages">
+        <?php if (!empty($errors)): ?>
             <ul>
                 <?php foreach ($errors as $error): ?>
                     <li><?php echo htmlspecialchars($error); ?></li>
                 <?php endforeach; ?>
             </ul>
-        </div>
-    <?php endif; ?>
+        <?php endif; ?>
+    </div>
 
     <?php if (!empty($successMessage)): ?>
         <div class="success">
@@ -74,15 +72,18 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         </div>
     <?php endif; ?>
 
-    <form method="POST" action="adminReviewEdit.php?id=<?php echo htmlspecialchars($reviewId); ?>">
+    <form  id="reviewForm"  method="POST" action="adminReviewEdit.php?id=<?php echo htmlspecialchars($reviewId); ?>">
         <label for="rating">Ocena:</label>
-        <input type="number" name="rating" id="rating" value="<?php echo htmlspecialchars($review['Rating']); ?>" min="1" max="5" required>
+        <input type="number" name="rating" id="rating" value="<?php echo htmlspecialchars($review['Rating']); ?>" min="1" max="5" >
 
-        <label for="review">Recenzja:</label>
-        <textarea name="review" id="review" required><?php echo htmlspecialchars($review['Content']); ?></textarea>
+        <label for="content">Recenzja:</label>
+        <textarea name="content" id="content" ><?php echo htmlspecialchars($review['Content']); ?></textarea>
 
         <button type="submit">Zapisz zmiany</button>
     </form>
 </div>
 
 <?php include 'includes/footer.php'; ?>
+
+<!-- podpięcie skryptu JS do walidacji po stronie klienta -->
+<script src="js/script.js"></script>
