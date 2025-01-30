@@ -1,3 +1,4 @@
+(function()
 {
     const validateMovieForm = function (event) {
         //kontener na błędy
@@ -42,43 +43,42 @@
                 errorContainer.appendChild(errorItem);
             });
         }
-    }
-    //nasłuchiwacz dla id=movieForm
-    document.getElementById('movieForm').addEventListener('submit', function(event){validateMovieForm(event); //wywołanie funkcji
-    });
-    }
+    };
+
+    const validateReviewForm = function (event) {
+        //kontener na błędy
+        const errorContainer = document.getElementById('error-messages');
+        errorContainer.innerHTML = ''; //reset poprzednich errorów
     
-    {
-        const validateReviewForm = function (event) {
-            //kontener na błędy
-            const errorContainer = document.getElementById('error-messages');
-            errorContainer.innerHTML = ''; //reset poprzednich errorów
-        
-            //przypisanie wartości
-            const content = document.getElementById('content').value.trim();
-            const rating = document.getElementById('rating').value;
-        
-            let errors = [];
-        
-            if (!content) {
-                errors.push("Tekst recenzji jest wymagany.");
-            }
-        
-            if (!rating) {
-                errors.push("Ocena jest wymagana.");
-            }
-        
-            if (errors.length > 0) {
-                event.preventDefault(); //stop wysyłanie formularza
-        
-                errors.forEach(error => {
-                    const errorItem = document.createElement('li');
-                    errorItem.textContent = error;
-                    errorContainer.appendChild(errorItem);
-                });
-            }
+        //przypisanie wartości
+        const content = document.getElementById('content').value.trim();
+        const rating = document.getElementById('rating').value;
+    
+        let errors = [];
+    
+        if (!content) {
+            errors.push("Tekst recenzji jest wymagany.");
         }
-        //nasłuchiwacz dla id=movieForm
-        document.getElementById('reviewForm').addEventListener('submit', function(event){validateReviewForm(event); //wywołanie funkcji
-        });
+    
+        if (!rating) {
+            errors.push("Ocena jest wymagana.");
         }
+    
+        if (errors.length > 0) {
+            event.preventDefault(); //stop wysyłanie formularza
+    
+            errors.forEach(error => {
+                const errorItem = document.createElement('li');
+                errorItem.textContent = error;
+                errorContainer.appendChild(errorItem);
+            });
+        }
+    };
+
+    //nasłuchiwacz dla id=movieForm
+    document.getElementById('movieForm').addEventListener('submit', function(event){validateMovieForm(event)}); //wywołanie funkcji
+
+    //nasłuchiwacz dla id=reviewForm
+    document.getElementById('reviewForm').addEventListener('submit', function(event){validateReviewForm(event)}); //wywołanie funkcji
+    
+})();
