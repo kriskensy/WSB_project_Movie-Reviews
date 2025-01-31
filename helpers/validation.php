@@ -3,11 +3,11 @@ function validateMovieForm($data) {
     $errors = [];
 
     //pobieranie danych
-    $title = trim($_POST['title']);
-    $directorId = $_POST['director'];
-    $genreId = $_POST['genre'];
-    $releaseYear = trim($_POST['releaseYear']);
-    $description = trim($_POST['description']);
+    $title = trim($data['title']);
+    $directorId = $data['director'];
+    $genreId = $data['genre'];
+    $releaseYear = trim($data['releaseYear']);
+    $description = trim($data['description']);
 
     //walidacja
     if (empty($title)) {
