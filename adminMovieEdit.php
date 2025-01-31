@@ -95,15 +95,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <div class="container">
     <h1>Edytuj film</h1>
 
-    <?php if (!empty($errors)): ?>
-        <div class="error">
+    <div class="error">
+        <?php if (!empty($errors)): ?>
             <ul>
                 <?php foreach ($errors as $error): ?>
                     <li><?php echo htmlspecialchars($error); ?></li>
                 <?php endforeach; ?>
             </ul>
-        </div>
-    <?php endif; ?>
+        <?php endif; ?>
+    </div>
 
     <?php if (!empty($successMessage)): ?>
         <div class="success">

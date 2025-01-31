@@ -55,7 +55,7 @@ $genres = $conn->query("SELECT IdGenre, Name FROM Genres")->fetchAll(PDO::FETCH_
     <h1>Dodaj nowy film</h1>
 
     <!-- komunikaty walidacji -->
-    <div class="error" id="error-messages">
+    <div class="error">
         <?php if (!empty($errors)): ?>
             <ul>
                 <?php foreach ($errors as $error): ?>

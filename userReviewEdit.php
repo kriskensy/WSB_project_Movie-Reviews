@@ -58,28 +58,30 @@ if ($reviewId) {
     <title>Edytuj Recenzję</title>
 </head>
 <body>
-<h1>Edytuj swoją recenzję</h1>
+    <div class="container">
+        <h1>Edytuj swoją recenzję</h1>
 
-<!-- komunikaty walidacji -->
-<div class="error" id="error-messages">
-        <?php if (!empty($errors)): ?>
-            <ul>
-                <?php foreach ($errors as $error): ?>
-                    <li><?php echo htmlspecialchars($error); ?></li>
-                <?php endforeach; ?>
-            </ul>
-        <?php endif; ?>
+        <!-- komunikaty walidacji -->
+        <div class="error">
+            <?php if (!empty($errors)): ?>
+                <ul>
+                    <?php foreach ($errors as $error): ?>
+                        <li><?php echo htmlspecialchars($error); ?></li>
+                    <?php endforeach; ?>
+                </ul>
+            <?php endif; ?>
+        </div>
+
+        <form method="POST" id="reviewForm">
+            <label for="content">Tekst recenzji:</label>
+            <textarea name="content" id="content" rows="5" ><?php echo htmlspecialchars($review['Content']); ?></textarea><br>
+
+            <label for="rating">Ocena (1-5):</label>
+            <input type="number" name="rating" id="rating" min="1" max="5" value="<?php echo $review['Rating']; ?>" ><br>
+
+            <button type="submit">Zapisz zmiany</button>
+        </form>
     </div>
-
-<form method="POST" id="reviewForm">
-    <label for="content">Tekst recenzji:</label>
-    <textarea name="content" id="content" rows="5" ><?php echo htmlspecialchars($review['Content']); ?></textarea><br>
-
-    <label for="rating">Ocena (1-5):</label>
-    <input type="number" name="rating" id="rating" min="1" max="5" value="<?php echo $review['Rating']; ?>" ><br>
-
-    <button type="submit">Zapisz zmiany</button>
-</form>
 </body>
 </html>
 <?php include 'includes/footer.php'; ?>

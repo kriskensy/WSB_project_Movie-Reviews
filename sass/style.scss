@@ -208,30 +208,40 @@ form {
             background-color: $color-hover;
         }
     }
-    
-        .error,
-        .success,
-        .info,
-        .warning {
-            font-size: 0.875rem;
-            margin-top: $spacing-small;
-        }
+}
+   
 
-        .error {
-            color: $color-error;
-        }
 
-        .success {
-            color: $color-success;
-        }
+.error,
+.success,
+.info,
+.warning {
+    font-size: 0.875rem;
+    margin-top: $spacing-small;
+    font-style: italic;
 
-        .info {
-            color: $color-info;
-        }
+    ul {
+        list-style: none;
+        text-align: center;
+        padding: 0;
+        margin-top: 3rem;
+    }
+}
 
-        .warning {
-            color: $color-warning;
-        }
+.error {
+    color: $color-error;
+}
+
+.success {
+    color: $color-success;
+}
+
+.info {
+    color: $color-info;
+}
+
+.warning {
+    color: $color-warning;
 }
 
 // pasek wyszukiwania i filtrowania
