@@ -43,7 +43,7 @@ $avgRating = $ratingStmt->fetch(PDO::FETCH_ASSOC)['AvgRating'] ?? 0;
         <p><strong>Gatunek:</strong> <?php echo htmlspecialchars($movie['Genre'] ?? 'Nieznany'); ?></p>
         <p><strong>Rok produkcji:</strong> <?php echo htmlspecialchars($movie['ReleaseYear']); ?></p>
         <p><strong>Średnia ocena:</strong> <?php echo number_format($avgRating, 1); ?>/5</p>
-        <?php if ($_SESSION['role'] !== 'Admin'): ?>
+        <?php if (!isset($_SESSION['role']) || $_SESSION['role'] !== 'Admin'): ?>
             <a href="userReviewAdd.php?id=<?php echo $movieId; ?>" class="btn">Dodaj recenzję</a>
         <?php endif ?>
     </div>

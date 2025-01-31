@@ -18,7 +18,7 @@ session_start();
         </a>
         <div class="left-buttons">
             <a href="index.php" class="btn btn-home">Strona główna</a>
-            <a href="userMoviesList.php" class="btn">Przeglądaj filmy</a>
+            <a href="generalMoviesList.php" class="btn">Przeglądaj filmy</a>
         </div>
         <div class="right-buttons">
             <?php if (isset($_SESSION['user_id'])): ?>
