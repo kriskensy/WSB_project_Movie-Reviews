@@ -42,6 +42,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $stmtUpdate->bindParam(':id', $reviewId, PDO::PARAM_INT);
 
         if ($stmtUpdate->execute()) {
+            //ponowne obliczenie średniej oceny filmu
+            $stmtUpdateRating = $conn->prepare("
+                UPDATE Movies 
+                SET AverageRating = COALESCE((SELECT AVG(Rating) FROM Reviews WHERE IdMovie = :movieId), 0) 
+                WHERE IdMovie = :movieId
+            ");
+            $stmtUpdateRating->bindParam(':movieId', $review['IdMovie']);
+            $stmtUpdateRating->execute();
+
             $successMessage = "Recenzja została zaktualizowana pomyślnie!";
             header("Location: adminReviewsManage.php");
             exit;
